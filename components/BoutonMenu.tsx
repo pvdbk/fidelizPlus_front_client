@@ -13,7 +13,11 @@ const buttonStyle = toStyle({
     alignItems: 'center'
 });
 
-export default class extends Component<{ title: string, onPress: EventHandler, imageSrc: string }> {
+export default class extends Component<{
+    title: string,
+    onPress: EventHandler,
+    imageSrc: string
+}> {
     render() {
         let { title, onPress, imageSrc } = this.props;
         return <TouchableHighlight onPress={onPress}><View style={buttonStyle}>
