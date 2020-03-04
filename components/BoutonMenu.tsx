@@ -1,28 +1,27 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { TouchableHighlight, View, Text, Image } from 'react-native';
-import { EventHandler, toStyle } from '../common/utils';
+import { toStyle } from '../common/utils';
+import { boutonMenu as config } from '../common/config';
+import { IBoutonMenu } from '../common/interfaces';
+
+const margin = config.style.margin;
 
 const buttonStyle = toStyle({
-    backgroundColor : '#0ff',
-    width: 200,
+    ...config.style,
     margin: 0,
-    padding: 30,
-    borderStyle: 'dashed',
-    borderWidth: 5,
     justifyContent: 'center',
     alignItems: 'center'
 });
 
-export default class extends Component<{
-    title: string,
-    onPress: EventHandler,
-    imageSrc: string
-}> {
-    render() {
-        let { title, onPress, imageSrc } = this.props;
-        return <TouchableHighlight onPress={onPress}><View style={buttonStyle}>
-            <Image style={{width: 50, height: 50}} source={require('../' + imageSrc)} />
-            <Text>{title}</Text>
-        </View></TouchableHighlight>;
-    }
-};
+export default ({ title, imageSrc, path } : IBoutonMenu) =>
+    <View style={toStyle((margin || margin === 0) ? { margin } : {})}>
+        <Link to={path}>
+            <TouchableHighlight>
+                <View style={buttonStyle}>
+                    <Image style={toStyle({width: 50, height: 50})} source={require('../' + imageSrc)} />
+                    <Text>{title}</Text>
+                </View>
+            </TouchableHighlight>
+        </Link>
+    </View>;

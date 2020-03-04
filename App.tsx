@@ -1,4 +1,5 @@
 import React from 'react';
-import Test from './Test';
+import Page from './common/Page';
+import Menu from './components/Menu';
 
-export default () => <Test/>;
+export default () => <Page/>;
