@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, NativeSyntheticEvent, NativeTouchEvent, View, createElement } from 'react-native';
+import { StyleSheet, NativeSyntheticEvent, NativeTouchEvent } from 'react-native';
 
 export type Dico<T> = { [key : string] : T };
 export type AnyObj = Dico<any>;

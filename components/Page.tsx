@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { toStyle } from '../common/utils';
+import { page as config } from './config';
 
 const [pageStyle, titleStyle] = [
-    {
-        backgroundColor: '#f0f',
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
+    config.style,
     { fontSize: 100 }
 ].map(toStyle);
 
