@@ -1,29 +1,13 @@
-import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import BoutonMenu from './BoutonMenu';
-import { toStyle } from '../common/utils';
+import { Grid, AnyObj } from '../common/utils';
+import { menu as config, pages } from '../common/config';
 
-const backgroundColor = '#ff0';
-const spacing = 10;
+const { nbColumns, style } : { nbColumns : number, style: AnyObj } = config;
 
-const [styleMenu, rowDirection, marged ] = [
-    { backgroundColor, padding: spacing },
-    { flexDirection:'row' },
-    { margin : spacing }
-].map(toStyle);
-
-export default (props : { boutons : BoutonMenu[] }) => {
-    return (<View style={styleMenu}>{
-        props.boutons
-            .reduce(
-                (lines, bouton, i) => {
-                    let ls = [...lines];
-                    let x = i%2;
-                    let wrapped = <View style={marged} key={x}>{bouton}</View>;
-                    ls.push(x ? [ls.pop(), wrapped] : [wrapped]);
-                    return ls;
-                },
-                []
-            ).map((row, i) => <View key={i} style={rowDirection}>{row}</View>)
-    }</View>);
-};
+export default () => <Grid {...{
+    style,
+    nbColumns,
+    elements: pages.map(({ title, imageSrc, path }, i) => <BoutonMenu key={i} {...{ title, imageSrc, path }} />)
+}}/>;
