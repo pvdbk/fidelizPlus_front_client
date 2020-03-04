@@ -8,12 +8,12 @@ const spacing = 10;
 
 const [styleMenu, rowDirection, marged ] = [
     { backgroundColor, padding: spacing },
-    { backgroundColor, flexDirection:'row' },
+    { flexDirection:'row' },
     { margin : spacing }
 ].map(toStyle);
 
 export default (props : { boutons : BoutonMenu[] }) => {
-    return (<View style={styleMenu}><View>{
+    return (<View style={styleMenu}>{
         props.boutons
             .reduce(
                 (lines, bouton, i) => {
@@ -25,5 +25,5 @@ export default (props : { boutons : BoutonMenu[] }) => {
                 },
                 []
             ).map((row, i) => <View key={i} style={rowDirection}>{row}</View>)
-    }</View></View>);
+    }</View>);
 };
