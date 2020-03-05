@@ -1,40 +1,30 @@
-import { AnyObj } from './utils';
-import ToImplement from '../components/ToImplement';
-import { IBoutonMenu } from './interfaces';
+import { ICfgPage, ICfgMenu, ICfgBoutonMenu } from './types';
 
-export const pages: (IBoutonMenu & { Comp : (x : AnyObj) => JSX.Element })[]
-= [
-    {title: '1 Hello world !', imageSrc: 'logo192.png', path: '/ToImplement1', Comp: ToImplement },
-    {title: '2 Hello world !', imageSrc: 'logo192.png', path: '/ToImplement2', Comp: ToImplement },
-    {title: '3 Hello world !', imageSrc: 'logo192.png', path: '/ToImplement3', Comp: ToImplement },
-    {title: '4 Hello world !', imageSrc: 'logo192.png', path: '/ToImplement4', Comp: ToImplement },
-    {title: '5 Hello world !', imageSrc: 'logo192.png', path: '/ToImplement5', Comp: ToImplement },
-];
-
-export const page: { mainStyle : AnyObj, titleStyle : AnyObj } = {
-    mainStyle: {
+export const page: ICfgPage = {
+    style: {
         backgroundColor: '#f0f',
         justifyContent: 'center',
         alignItems: 'center'
     },
-    titleStyle: { fontSize: 100 }
+    title: { size: 1 }
 };
 
-export const menu: { style: AnyObj, nbColumns: number } = {
+export const menu: ICfgMenu = {
     style: {
         backgroundColor: '#ff0',
-        padding: 10
+        padding: 5
     },
     nbColumns: 2,
 };
 
-export const boutonMenu: { style: AnyObj } = {
+export const boutonMenu: ICfgBoutonMenu = {
+    marginRate: 5,
+    paddingRate: 5,
+    imageRate: 50,
+    fontSize: 1,
     style: {
-        backgroundColor : '#0ff',
-        width: 200,
-        padding: 30,
-        borderStyle: 'dashed',
-        borderWidth: 5,
-        margin : 10
+        backgroundColor: '#fff',
+        borderStyle: 'solid',
+        borderWidth: 1
     }
 };
