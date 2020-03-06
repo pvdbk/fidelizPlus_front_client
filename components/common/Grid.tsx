@@ -1,7 +1,19 @@
 import React from 'react';
 import { View } from 'react-native';
 import { AnyObj } from '../../common/types';
-import { toStyleSheet } from '../../common/utils';
+import { toStyleSheet, childrenMap, lineStyleSheet } from '../../common/utils';
+
+const
+    getRows: (elements: JSX.Element[], nbColumns: number) => JSX.Element[] =
+    (elements, nbColumns) => {
+        let rows: JSX.Element[][] = [];
+        elements.forEach((element, i) =>
+            rows.push(i % nbColumns
+                ? [...(rows.pop() || []), element]
+                : [element]
+            ));
+        return childrenMap(View, rows, { style : lineStyleSheet({ justifyContent: 'center' }) });
+    };
 
 export default ({
     style,
@@ -11,18 +23,4 @@ export default ({
     style?: AnyObj,
     nbColumns: number,
     elements: JSX.Element[]
-}) => {
-    const rowDirection: AnyObj = toStyleSheet({ flexDirection: 'row', justifyContent: 'center' });
-    let rows: JSX.Element[][] = [];
-    elements.forEach((element, i) =>
-        rows.push(i % nbColumns
-            ? [...(rows.pop() || []), element]
-            : [element]
-        ));
-    return <View style={toStyleSheet({ ...style })}>
-        {rows.map(
-            (row, i) =>
-                <View key={i} style={rowDirection}>{row}</View>
-        )}
-    </View>;
-};
+}) => <View style={toStyleSheet({ ...style })}>{getRows(elements, nbColumns)}</View>;

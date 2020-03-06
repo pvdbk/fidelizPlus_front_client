@@ -1,47 +1,89 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { TouchableHighlight, View, Text, Image } from 'react-native';
-import { toStyleSheet, screenWidth } from '../../common/utils';
-import { boutonMenu as configBM, menu as configMenu } from '../../common/config';
-import { IBoutonMenu, AnyObj } from '../../common/types';
+import { TouchableHighlight, View, Text } from 'react-native';
+import { toStyleSheet, screenWidth, picture } from '../../common/utils';
+import { boutonMenu as configBouton, menu as configMenu } from '../../common/config';
+import { AnyObj, OrientationType, IBoutonMenuProps, Dico } from '../../common/types';
+import { OrientationCtxt } from '../../common/contexts';
 import Line from '../common/Line';
 
-const widthWithMargins: number = Math.floor((screenWidth - 2*((configMenu.style && configMenu.style.padding) || 0)) / configMenu.nbColumns);
-const { marginRate, paddingRate, imageRate, style } :
-{
-    marginRate: number,
-    paddingRate: number,
-    imageRate: number,
-    style?: AnyObj
-} = configBM;
-const [margin, padding] : number[] = [marginRate, paddingRate].map(
-    rate => Math.floor(widthWithMargins * rate / 100)
-);
-const width: number = widthWithMargins - 2*margin;
-const [imageStyleSheet, buttonStyleSheet, titleStyleSheet ]: AnyObj[] = [
-    (dim => ({ width: dim, height: dim }))(
-        Math.floor((width - 2*padding) * imageRate / 100)
-    ),
-    {
-        ...style,
-        margin: 0,
-        justifyContent: 'center',
-        alignItems: 'center',
-        width,
-        padding
-    },
-    { fontSize : Math.floor(configBM.fontSize * screenWidth / 30) }
-].map(toStyleSheet);
+const boutonStyle = configBouton.style;
 
-export default ({ title, imageSrc, path }: IBoutonMenu) =>
-    <View style={toStyleSheet({ margin })}>
-        <Link to={path} style={{ textDecoration: 'none' }}>
-            <TouchableHighlight>
-                <View style={buttonStyleSheet}>
-                    <Text style={titleStyleSheet}>{title}</Text>
-                    <Line />
-                    <Image style={imageStyleSheet} source={require('../../pictures/' + imageSrc)} />
+const getDims = (orientation: OrientationType) => {
+    const screenWdth = screenWidth();
+    const {
+        marginRate,
+        paddingRate,
+        imageRate,
+        fontSize,
+    }: Dico<number> = configBouton[orientation];
+    const {
+        nbColumns,
+        padding: menuPadding
+    }: Dico<number | undefined> = configMenu[orientation];
+    const
+        totalWidth: number =
+        (screenWdth - 2 * (menuPadding || 0)) / nbColumns;
+    const
+        [boutonMargin, boutonPadding]: number[] =
+        [marginRate, paddingRate].map(rate => totalWidth * rate / 100);
+    const
+        boutonWidth: number =
+        totalWidth - 2 * boutonMargin;
+    return {
+        boutonWidth: Math.floor(boutonWidth),
+        boutonMargin: Math.floor(boutonMargin),
+        boutonPadding: Math.floor(boutonPadding),
+        pictureSide: Math.floor((boutonWidth - 2 * boutonPadding) * imageRate / 100),
+        fontSize: Math.floor(fontSize * screenWdth / 30)
+    }
+};
+
+const getStyleSheets = (orientation: OrientationType) => {
+    const {
+        boutonMargin,
+        boutonWidth,
+        boutonPadding,
+        pictureSide,
+        fontSize
+    }: Dico<number> = getDims(orientation);
+    const menu
+        : AnyObj
+        = toStyleSheet({ margin: boutonMargin });
+    const bouton
+        : AnyObj
+        = toStyleSheet({
+            ...boutonStyle,
+            margin: 0,
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: boutonWidth,
+            padding: boutonPadding
+        });
+    const text
+        : AnyObj
+        = toStyleSheet({ fontSize });
+    const image
+        : AnyObj
+        = toStyleSheet({ width: pictureSide, height: pictureSide });
+    return { menu, bouton, text, image };
+}
+
+export default ({ title, name }: IBoutonMenuProps) =>
+    <OrientationCtxt.Consumer>
+        {
+            (orientation: OrientationType) => (
+                (styleSheets : Dico<AnyObj>) => <View style={styleSheets.menu}>
+                    <Link to={'/' + name} style={{ textDecoration: 'none' }}>
+                        <TouchableHighlight>
+                            <View style={styleSheets.bouton}>
+                                <Text style={styleSheets.text}>{title}</Text>
+                                <Line />
+                                {picture(name, styleSheets.image)}
+                            </View>
+                        </TouchableHighlight>
+                    </Link>
                 </View>
-            </TouchableHighlight>
-        </Link>
-    </View>;
+            )(getStyleSheets(orientation))
+        }
+    </OrientationCtxt.Consumer>;

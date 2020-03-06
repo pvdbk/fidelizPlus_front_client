@@ -1,13 +1,13 @@
-import { IBoutonMenu, ComponentType } from './types';
-import ToImplement from '../components/ToImplement';
+import { ComponentType } from './types';
+import ToImplement from '../components/common/ToImplement';
 
-const pages: (IBoutonMenu & { Comp: ComponentType })[] = [
-    { title: 'Mon compte', imageSrc: 'compte.png', path: '/compte', Comp: ToImplement },
-    { title: 'Mes offres', imageSrc: 'offres.png', path: '/offres', Comp: ToImplement },
-    { title: 'Mes achats', imageSrc: 'achats.png', path: '/achats', Comp: ToImplement },
-    { title: 'Sondages', imageSrc: 'sondages.png', path: '/sondages', Comp: ToImplement },
-    { title: 'Historique', imageSrc: 'historique.png', path: '/historique', Comp: ToImplement },
-    { title: 'Mes avis', imageSrc: 'avis.png', path: '/avis', Comp: ToImplement },
+const pages: { title: string, name: string, component: ComponentType }[] = [
+    { title: 'Mon compte', name: 'compte', component: ToImplement },
+    { title: 'Mes offres', name: 'offres', component: ToImplement },
+    { title: 'Mes achats', name: 'achats', component: ToImplement },
+    { title: 'Sondages', name: 'sondages', component: ToImplement },
+    { title: 'Historique', name: 'historique', component: ToImplement },
+    { title: 'Mes avis', name: 'avis', component: ToImplement },
 ];
 
 export default pages;
