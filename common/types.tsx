@@ -1,28 +1,39 @@
 import { Component } from 'react';
 
+export type OrientationType = 'PORTRAIT' | 'LANDSCAPE';
+
 export type Dico<T> = { [key: string]: T };
 
 export type AnyObj = Dico<any>;
 
-export type ComponentType = (typeof Component) | ((x: AnyObj) => JSX.Element);
+export type ComponentType = (typeof Component) | ((props: AnyObj) => JSX.Element);
 
-export interface IBoutonMenu {
+export type PermissiveComponentType = (typeof Component) | ((props: any) => JSX.Element);
+
+export interface IBoutonMenuProps {
     title: string,
-    imageSrc: string,
-    path: string
+    name: string
 };
 
-export interface ICfgPage {
+export interface IPageCfg {
     style: AnyObj,
-    title: { size: number, style?: AnyObj }
+    initialOrientation: OrientationType
 };
 
-export interface ICfgMenu { style?: AnyObj, nbColumns: number };
+export interface IMenuCfg extends Record<
+    OrientationType,
+    {
+        nbColumns: number,
+        padding?: number,
+    }
+> { style?: AnyObj };
 
-export interface ICfgBoutonMenu {
-    marginRate: number,
-    paddingRate: number,
-    imageRate: number,
-    fontSize: number,
-    style?: AnyObj
-};
+export interface IBoutonMenuCfg extends Record<
+    OrientationType,
+    {
+        marginRate: number,
+        paddingRate: number,
+        imageRate: number,
+        fontSize: number,
+    }
+> { style?: AnyObj };
