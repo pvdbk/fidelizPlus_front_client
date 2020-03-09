@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, Dimensions } from 'react-native';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { toStyleSheet, propsMap } from '../../common/utils';
 import { page as config } from '../../common/config';
-import { OrientationType, ComponentType } from '../../common/types';
-import { OrientationCtxt } from '../../common/contexts';
+import { IDims, OrientationType, ComponentType } from '../../common/types';
+import { OrientationCtxt, ActionCtxt } from '../../common/contexts';
 import pages from '../../common/pagesInfos';
 import Menu from '../menu/Menu';
 import EnTete from './EnTete';
@@ -16,9 +16,17 @@ const routes
         ...pages.map(({ name, component }) => ({ path: '/' + name, component })),
         { path: '/', component: () => <Redirect to={'/menu'} /> }
     ];
-const switchElt
-    : JSX.Element
-    = <Switch>{propsMap(Route, routes)}</Switch>;
+
+export const internalDims
+    : (orientation: OrientationType) => IDims
+    = orientation => {
+        const { width, height } = Dimensions.get('window');
+        const enteteRate = config[orientation].enteteRate;
+        return {
+            width,
+            height: height * (1 - enteteRate / 100)
+        };
+    };
 
 export default class extends Component<{}> {
     state
@@ -40,12 +48,18 @@ export default class extends Component<{}> {
     componentWillUnmount = () => Orientation.removeOrientationListener(this.setOrientation)
     */
     render = () =>
-        <OrientationCtxt.Provider value={this.state.orientation}>
-            <BrowserRouter>
-                <View style={toStyleSheet(config.style)}>
-                    <EnTete />
-                    {switchElt}
-                </View>
-            </BrowserRouter>
-        </OrientationCtxt.Provider>
+        <ActionCtxt.Provider value={
+            () => this.setOrientation(this.state.orientation === 'PORTRAIT' ? 'LANDSCAPE' : 'PORTRAIT')
+        }>
+            <OrientationCtxt.Provider value={this.state.orientation}>
+                <BrowserRouter>
+                    <View style={toStyleSheet(config.style)}>
+                        <EnTete />
+                        <View style={toStyleSheet(internalDims(this.state.orientation))}>
+                            <Switch>{propsMap(Route, routes)}</Switch>
+                        </View>
+                    </View>
+                </BrowserRouter>
+            </OrientationCtxt.Provider>
+        </ActionCtxt.Provider>;
 }

@@ -10,30 +10,36 @@ export type ComponentType = (typeof Component) | ((props: AnyObj) => JSX.Element
 
 export type PermissiveComponentType = (typeof Component) | ((props: any) => JSX.Element);
 
-export interface IBoutonMenuProps {
-    title: string,
-    name: string
+export interface IDims {
+    width: number,
+    height: number
+}
+
+export interface IOrientedPageCfg {
+    enteteRate: number,
+    logoRate: number
 };
 
-export interface IPageCfg {
+export interface IOrientedMenuCfg {
+    nbColumns: number,
+    paddingHorizontalRate?: number,
+    paddingVerticalRate?: number,
+};
+
+export interface IOrientedBoutonMenuCfg {
+    marginHorizontalRate: number,
+    marginVerticalRate: number,
+    paddingHorizontalRate: number,
+    paddingVerticalRate: number,
+    imageRate: number,
+    fontSizeRate: number,
+}
+
+export interface IPageCfg extends Record<OrientationType, IOrientedPageCfg> {
     style: AnyObj,
     initialOrientation: OrientationType
 };
 
-export interface IMenuCfg extends Record<
-    OrientationType,
-    {
-        nbColumns: number,
-        padding?: number,
-    }
-> { style?: AnyObj };
+export interface IMenuCfg extends Record<OrientationType, IOrientedMenuCfg> { style?: AnyObj };
 
-export interface IBoutonMenuCfg extends Record<
-    OrientationType,
-    {
-        marginRate: number,
-        paddingRate: number,
-        imageRate: number,
-        fontSize: number,
-    }
-> { style?: AnyObj };
+export interface IBoutonMenuCfg extends Record<OrientationType, IOrientedBoutonMenuCfg> { style?: AnyObj };

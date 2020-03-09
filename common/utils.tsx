@@ -1,11 +1,7 @@
 import React from 'react';
 import { Image } from 'react-native';
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { AnyObj, ComponentType, PermissiveComponentType } from './types';
-
-export const screenWidth
-    : number
-    = Math.round(Dimensions.get('window').width);
 
 export const toStyleSheet
     : (style?: AnyObj) => AnyObj
@@ -24,7 +20,7 @@ export const childrenMap
     = (Comp, listChildren, props) => listChildren.map((children, i) => <Comp key={i} {...props}>{children}</Comp>);
 
 export const picture
-    : (name : string, style?: AnyObj ) => JSX.Element
+    : (name: string, style?: AnyObj) => JSX.Element
     = (name, style = {}) => <Image
         style={style}
         source={require('../pictures/' + name + '.png')}

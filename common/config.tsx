@@ -1,36 +1,52 @@
 import { IPageCfg, IMenuCfg, IBoutonMenuCfg } from './types';
 
 export const page: IPageCfg = {
+    PORTRAIT: {
+        enteteRate: 10,
+        logoRate: 80
+    },
+    LANDSCAPE: {
+        enteteRate: 13,
+        logoRate: 80
+    },
     style: {
         backgroundColor: '#f0f',
         justifyContent: 'center',
         alignItems: 'center'
     },
     initialOrientation: 'LANDSCAPE',
-    title: { size: 1 },
 };
 
 export const menu: IMenuCfg = {
-    PORTRAIT: { nbColumns: 2 },
-    LANDSCAPE: { nbColumns: 3 },
-    style: {
-        backgroundColor: '#ff0',
-        padding: 5
-    }
+    PORTRAIT: {
+        nbColumns: 2,
+        paddingHorizontalRate: 5,
+        paddingVerticalRate: 5
+    },
+    LANDSCAPE: {
+        nbColumns: 3,
+        paddingHorizontalRate: 5,
+        paddingVerticalRate: 5
+    },
+    style: { backgroundColor: '#ff0' }
 };
 
 export const boutonMenu: IBoutonMenuCfg = {
     PORTRAIT: {
-        marginRate: 5,
-        paddingRate: 5,
+        marginHorizontalRate: 5,
+        marginVerticalRate: 5,
+        paddingHorizontalRate: 5,
+        paddingVerticalRate: 5,
         imageRate: 50,
-        fontSize: 1    
+        fontSizeRate: 10
     },
     LANDSCAPE: {
-        marginRate: 5,
-        paddingRate: 5,
+        marginHorizontalRate: 5,
+        marginVerticalRate: 5,
+        paddingHorizontalRate: 5,
+        paddingVerticalRate: 5,
         imageRate: 50,
-        fontSize: 1    
+        fontSizeRate: 10
     },
     style: {
         backgroundColor: '#fff',
