@@ -8,32 +8,54 @@ export type AnyObj = Dico<any>;
 
 export type ComponentType = (typeof Component) | ((props: AnyObj) => JSX.Element);
 
-export type PermissiveComponentType = (typeof Component) | ((props: any) => JSX.Element);
-
-export interface IBoutonMenuProps {
-    title: string,
-    name: string
+export type DimsType = {
+    width: number,
+    height: number
 };
 
-export interface IPageCfg {
+export type PaddingType = {
+    paddingVertical: number,
+    paddingHorizontal: number
+};
+
+export type MarginType = {
+    marginVertical: number,
+    marginHorizontal: number
+};
+
+export type BoutonMenuPropsType = {
+    title: string,
+    name: string,
+    marginHorizontal: number,
+    marginVertical: number,
+};
+
+
+export interface IOrientedPageCfg {
+    enteteRate: number,
+    logoRate: number
+};
+
+export interface IOrientedMenuCfg {
+    nbColumns: number,
+    borderHorizontalRate?: number,
+    borderVerticalRate?: number,
+    interHorizontalRate?: number,
+    interVerticalRate?: number
+};
+
+export interface IOrientedBoutonMenuCfg {
+    paddingHorizontalRate?: number,
+    paddingVerticalRate?: number,
+    imageRate: number,
+    fontSizeRate: number,
+}
+
+export interface IPageCfg extends Record<OrientationType, IOrientedPageCfg> {
     style: AnyObj,
     initialOrientation: OrientationType
 };
 
-export interface IMenuCfg extends Record<
-    OrientationType,
-    {
-        nbColumns: number,
-        padding?: number,
-    }
-> { style?: AnyObj };
+export interface IMenuCfg extends Record<OrientationType, IOrientedMenuCfg> { style?: AnyObj };
 
-export interface IBoutonMenuCfg extends Record<
-    OrientationType,
-    {
-        marginRate: number,
-        paddingRate: number,
-        imageRate: number,
-        fontSize: number,
-    }
-> { style?: AnyObj };
+export interface IBoutonMenuCfg extends Record<OrientationType, IOrientedBoutonMenuCfg> { style?: AnyObj };

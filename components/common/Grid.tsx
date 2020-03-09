@@ -1,26 +1,35 @@
 import React from 'react';
 import { View } from 'react-native';
 import { AnyObj } from '../../common/types';
-import { toStyleSheet, childrenMap, lineStyleSheet } from '../../common/utils';
+import { toStyleSheet, lineStyleSheet } from '../../common/utils';
 
-const
-    getRows: (elements: JSX.Element[], nbColumns: number) => JSX.Element[] =
-    (elements, nbColumns) => {
+const getRows
+    : (elements: JSX.Element[], nbColumns: number) => JSX.Element[]
+    = (elements, nbColumns) => {
         let rows: JSX.Element[][] = [];
         elements.forEach((element, i) =>
             rows.push(i % nbColumns
                 ? [...(rows.pop() || []), element]
                 : [element]
             ));
-        return childrenMap(View, rows, { style : lineStyleSheet({ justifyContent: 'center' }) });
+        return rows.map((row, i) =>
+            <View
+                key={i}
+                style={lineStyleSheet({ justifyContent: 'center' })}
+            >{row}</View>
+        );
     };
 
-export default ({
-    style,
-    nbColumns,
-    elements
-}: {
+interface IGridProps {
     style?: AnyObj,
     nbColumns: number,
     elements: JSX.Element[]
-}) => <View style={toStyleSheet({ ...style })}>{getRows(elements, nbColumns)}</View>;
+};
+
+export default (
+    {
+        style,
+        nbColumns,
+        elements
+    }: IGridProps
+) => <View style={toStyleSheet({ ...style })}>{getRows(elements, nbColumns)}</View>;

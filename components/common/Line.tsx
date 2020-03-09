@@ -2,22 +2,26 @@ import React from 'react';
 import { View } from 'react-native';
 import { toStyleSheet } from '../../common/utils';
 
-export default ({
-    color: borderBottomColor = '#999',
-    width: borderBottomWidth = 2,
-    horizMargin = 0,
-    vertMargin = 10
-}: {
+interface ILineProps {
     color?: string,
     width?: number,
-    horizMargin?: number,
-    vertMargin?: number,
-}) => <View style={toStyleSheet({
+    marginHorizontal?: number,
+    marginVertical?: number,
+};
+
+export default (
+    {
+        color: borderBottomColor = '#999',
+        width: borderBottomWidth = 2,
+        marginHorizontal = 0,
+        marginVertical = 0
+    }: ILineProps
+) => <View style={toStyleSheet({
     borderBottomColor,
     borderBottomWidth,
-    marginTop : vertMargin,
-    marginBottom : vertMargin,
-    marginLeft : horizMargin,
-    marginRight : horizMargin,
+    marginTop: marginVertical,
+    marginBottom: marginVertical,
+    marginLeft: marginHorizontal,
+    marginRight: marginHorizontal,
     alignSelf: 'stretch'
 })} />
