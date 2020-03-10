@@ -8,34 +8,50 @@ export type AnyObj = Dico<any>;
 
 export type ComponentType = (typeof Component) | ((props: AnyObj) => JSX.Element);
 
-export type PermissiveComponentType = (typeof Component) | ((props: any) => JSX.Element);
-
-export interface IDims {
+export type DimsType = {
     width: number,
     height: number
-}
+};
 
-export interface IOrientedPageCfg {
-    enteteRate: number,
+export type PaddingType = {
+    paddingVertical: number,
+    paddingHorizontal: number
+};
+
+export type MarginType = {
+    marginVertical: number,
+    marginHorizontal: number
+};
+
+export type BoutonMenuPropsType = {
+    title: string,
+    name: string,
+    marginHorizontal: number,
+    marginVertical: number,
+};
+
+
+export interface IOrientedAppCfg {
+    headerRate: number,
     logoRate: number
 };
 
 export interface IOrientedMenuCfg {
     nbColumns: number,
-    paddingHorizontalRate?: number,
-    paddingVerticalRate?: number,
+    borderHorizontalRate?: number,
+    borderVerticalRate?: number,
+    interHorizontalRate?: number,
+    interVerticalRate?: number
 };
 
 export interface IOrientedBoutonMenuCfg {
-    marginHorizontalRate: number,
-    marginVerticalRate: number,
-    paddingHorizontalRate: number,
-    paddingVerticalRate: number,
+    paddingHorizontalRate?: number,
+    paddingVerticalRate?: number,
     imageRate: number,
     fontSizeRate: number,
 }
 
-export interface IPageCfg extends Record<OrientationType, IOrientedPageCfg> {
+export interface IAppCfg extends Record<OrientationType, IOrientedAppCfg> {
     style: AnyObj,
     initialOrientation: OrientationType
 };

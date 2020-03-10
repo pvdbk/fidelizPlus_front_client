@@ -14,7 +14,7 @@ export default (
         color: borderBottomColor = '#999',
         width: borderBottomWidth = 2,
         marginHorizontal = 0,
-        marginVertical = 10
+        marginVertical = 0
     }: ILineProps
 ) => <View style={toStyleSheet({
     borderBottomColor,

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image } from 'react-native';
 import { StyleSheet } from 'react-native';
-import { AnyObj, ComponentType, PermissiveComponentType } from './types';
+import { AnyObj } from './types';
 
 export const toStyleSheet
     : (style?: AnyObj) => AnyObj
@@ -10,14 +10,6 @@ export const toStyleSheet
 export const lineStyleSheet
     : (style?: AnyObj) => AnyObj
     = (style = {}) => toStyleSheet({ flexDirection: 'row', alignItems: 'center', ...style });
-
-export const propsMap
-    : (Comp: PermissiveComponentType, listProps: AnyObj[]) => JSX.Element[]
-    = (Comp, listProps) => listProps.map((props, i) => <Comp key={i} {...props} />);
-
-export const childrenMap
-    : (Comp: ComponentType, listChildren: (JSX.Element | JSX.Element[])[], props?: AnyObj) => JSX.Element[]
-    = (Comp, listChildren, props) => listChildren.map((children, i) => <Comp key={i} {...props}>{children}</Comp>);
 
 export const picture
     : (name: string, style?: AnyObj) => JSX.Element

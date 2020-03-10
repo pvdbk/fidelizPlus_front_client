@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import { AnyObj } from '../../common/types';
-import { toStyleSheet, childrenMap, lineStyleSheet } from '../../common/utils';
+import { toStyleSheet, lineStyleSheet } from '../../common/utils';
 
 const getRows
     : (elements: JSX.Element[], nbColumns: number) => JSX.Element[]
@@ -12,7 +12,12 @@ const getRows
                 ? [...(rows.pop() || []), element]
                 : [element]
             ));
-        return childrenMap(View, rows, { style: lineStyleSheet({ justifyContent: 'center' }) });
+        return rows.map((row, i) =>
+            <View
+                key={i}
+                style={lineStyleSheet({ justifyContent: 'center' })}
+            >{row}</View>
+        );
     };
 
 interface IGridProps {
